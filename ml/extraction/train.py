@@ -57,12 +57,12 @@ def train_span_extractor(
     val_parquet: str = "ml/data/processed/val_chunks.parquet",
     output_dir: Path = CHECKPOINTS_DIR / "best_checkpoint",
     num_epochs: int = 5,
-    train_batch_size: int = 8,
+    train_batch_size: int = 16,
     eval_batch_size: int = 32,
     gradient_accumulation_steps: int = 1,
     learning_rate: float = 4e-3,
     max_length: int = 256,
-    max_train_samples: Optional[int] = 400,
+    max_train_samples: Optional[int] = 1200,
     freeze_encoder: bool = True,
     is_feasibility_run: bool = False,
     device: str = "cpu",
@@ -109,8 +109,8 @@ def train_span_extractor(
         attn_implementation="eager"
     ).to(device)
 
-    # Class weighting: O=0.2, B=7.0, I=3.0 (rebalanced for token class rarity)
-    class_weights = torch.tensor([0.2, 7.0, 3.0], dtype=torch.float32).to(device)
+    # Class weighting: O=0.2, B=10.0, I=3.0 (rebalanced for token class rarity)
+    class_weights = torch.tensor([0.2, 10.0, 3.0], dtype=torch.float32).to(device)
 
     # Freeze encoder parameters for CPU training efficiency and feature preservation
     if freeze_encoder:
@@ -203,12 +203,21 @@ def train_span_extractor(
     if is_feasibility_run:
         val_df = val_df.head(32)
 
-    # Extract all gold spans in validation split
+    # Extract all gold spans in validation split (deduplicated per contract)
     all_gold_spans = []
+    seen_gold = set()
     for _, row in val_df.iterrows():
-        all_gold_spans.extend(row["spans"])
+        c_id = row["contract_id"]
+        for s in row["spans"]:
+            key = (c_id, s["category"], s["global_start"], s["global_end"])
+            if key not in seen_gold:
+                seen_gold.add(key)
+                g = dict(s)
+                g["contract_id"] = c_id
+                g["document_id"] = c_id
+                all_gold_spans.append(g)
 
-    print(f"Loaded {len(val_df):,} validation chunks with {len(all_gold_spans):,} gold clause spans.")
+    print(f"Loaded {len(val_df):,} validation chunks with {len(all_gold_spans):,} unique gold clause spans.")
     val_dataset = build_span_dataset(val_df, tokenizer, max_length=max_length, include_metadata=True)
     del val_df
     gc.collect()
@@ -267,9 +276,9 @@ def train_span_extractor(
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="ClauseGuard Stage 4 Span Extraction Training")
     parser.add_argument("--epochs", type=int, default=5, help="Number of training epochs")
-    parser.add_argument("--batch_size", type=int, default=8, help="Batch size")
+    parser.add_argument("--batch_size", type=int, default=16, help="Batch size")
     parser.add_argument("--lr", type=float, default=4e-3, help="Learning rate")
-    parser.add_argument("--max_samples", type=int, default=400, help="Max training samples")
+    parser.add_argument("--max_samples", type=int, default=1200, help="Max training samples")
     parser.add_argument("--no_freeze_encoder", action="store_true", help="Unfreeze encoder backbone")
     parser.add_argument("--feasibility", action="store_true", help="Quick feasibility run on 32 samples")
     args = parser.parse_args()

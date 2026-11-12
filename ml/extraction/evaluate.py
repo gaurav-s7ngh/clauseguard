@@ -72,23 +72,60 @@ def evaluate_predicted_spans(
         n_preds = len(preds)
         n_golds = len(golds)
 
-        # 1. Exact Match evaluation
-        matched_golds_exact = set()
-        exact_tp = 0
+        # Subgroup by document/contract ID to prevent cross-contract match corruption
+        doc_ids = set()
+        preds_by_doc: Dict[Any, List[Dict[str, Any]]] = {}
         for p in preds:
-            p_start, p_end = p["start_char"], p["end_char"]
-            match_found = False
-            for g_idx, g in enumerate(golds):
-                if g_idx in matched_golds_exact:
-                    continue
-                g_start = g.get("global_start", g.get("start_char"))
-                g_end = g.get("global_end", g.get("end_char"))
-                if p_start == g_start and p_end == g_end:
-                    matched_golds_exact.add(g_idx)
-                    match_found = True
-                    break
-            if match_found:
-                exact_tp += 1
+            d_id = p.get("document_id") or p.get("contract_id")
+            preds_by_doc.setdefault(d_id, []).append(p)
+            doc_ids.add(d_id)
+
+        golds_by_doc: Dict[Any, List[Dict[str, Any]]] = {}
+        for g in golds:
+            d_id = g.get("document_id") or g.get("contract_id")
+            golds_by_doc.setdefault(d_id, []).append(g)
+            doc_ids.add(d_id)
+
+        exact_tp = 0
+        partial_tp = 0
+
+        for d_id in doc_ids:
+            d_preds = preds_by_doc.get(d_id, [])
+            d_golds = golds_by_doc.get(d_id, [])
+
+            # 1. Exact Match evaluation
+            matched_golds_exact = set()
+            for p in d_preds:
+                p_start, p_end = p["start_char"], p["end_char"]
+                for g_idx, g in enumerate(d_golds):
+                    if g_idx in matched_golds_exact:
+                        continue
+                    g_start = g.get("global_start", g.get("start_char"))
+                    g_end = g.get("global_end", g.get("end_char"))
+                    if p_start == g_start and p_end == g_end:
+                        matched_golds_exact.add(g_idx)
+                        exact_tp += 1
+                        break
+
+            # 2. Partial Overlap (IoU >= threshold) evaluation
+            matched_golds_partial = set()
+            for p in d_preds:
+                p_start, p_end = p["start_char"], p["end_char"]
+                best_iou = 0.0
+                best_g_idx = -1
+                for g_idx, g in enumerate(d_golds):
+                    if g_idx in matched_golds_partial:
+                        continue
+                    g_start = g.get("global_start", g.get("start_char"))
+                    g_end = g.get("global_end", g.get("end_char"))
+                    iou = compute_span_iou(p_start, p_end, g_start, g_end)
+                    if iou >= iou_threshold and iou > best_iou:
+                        best_iou = iou
+                        best_g_idx = g_idx
+
+                if best_g_idx != -1:
+                    matched_golds_partial.add(best_g_idx)
+                    partial_tp += 1
 
         exact_fp = n_preds - exact_tp
         exact_fn = n_golds - exact_tp
@@ -96,27 +133,6 @@ def evaluate_predicted_spans(
         exact_prec = exact_tp / (exact_tp + exact_fp) if (exact_tp + exact_fp) > 0 else 0.0
         exact_rec = exact_tp / (exact_tp + exact_fn) if (exact_tp + exact_fn) > 0 else 0.0
         exact_f1 = (2 * exact_prec * exact_rec) / (exact_prec + exact_rec) if (exact_prec + exact_rec) > 0 else 0.0
-
-        # 2. Partial Overlap (IoU >= threshold) evaluation
-        matched_golds_partial = set()
-        partial_tp = 0
-        for p in preds:
-            p_start, p_end = p["start_char"], p["end_char"]
-            best_iou = 0.0
-            best_g_idx = -1
-            for g_idx, g in enumerate(golds):
-                if g_idx in matched_golds_partial:
-                    continue
-                g_start = g.get("global_start", g.get("start_char"))
-                g_end = g.get("global_end", g.get("end_char"))
-                iou = compute_span_iou(p_start, p_end, g_start, g_end)
-                if iou >= iou_threshold and iou > best_iou:
-                    best_iou = iou
-                    best_g_idx = g_idx
-
-            if best_g_idx != -1:
-                matched_golds_partial.add(best_g_idx)
-                partial_tp += 1
 
         partial_fp = n_preds - partial_tp
         partial_fn = n_golds - partial_tp
@@ -237,6 +253,9 @@ def evaluate_extractor_on_dataloader(
             chunk_ids = batch.get("chunk_id", ["chunk"] * len(input_ids))
             char_starts = batch.get("char_start", [0] * len(input_ids))
             texts = batch.get("text", [""] * len(input_ids))
+            contract_ids = batch.get("contract_id")
+            if contract_ids is None:
+                contract_ids = [None] * len(input_ids)
 
             if offset_mapping is not None:
                 offsets_np = offset_mapping.numpy()
@@ -248,6 +267,7 @@ def evaluate_extractor_on_dataloader(
                         chunk_text=texts[b_i],
                         chunk_char_start=int(char_starts[b_i]),
                         chunk_id=chunk_ids[b_i],
+                        document_id=contract_ids[b_i],
                         min_confidence=min_confidence,
                         channel_whitelist=channel_whitelist,
                         b_threshold=b_threshold,

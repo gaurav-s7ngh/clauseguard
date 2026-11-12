@@ -31,7 +31,8 @@ class PretokenizedSpanDataset(Dataset):
         chunk_ids: Optional[List[str]] = None,
         char_starts: Optional[List[int]] = None,
         texts: Optional[List[str]] = None,
-        token_type_ids: Optional[torch.Tensor] = None
+        token_type_ids: Optional[torch.Tensor] = None,
+        contract_ids: Optional[List[str]] = None
     ):
         self.input_ids = input_ids
         self.attention_mask = attention_mask
@@ -41,6 +42,7 @@ class PretokenizedSpanDataset(Dataset):
         self.char_starts = char_starts
         self.texts = texts
         self.token_type_ids = token_type_ids
+        self.contract_ids = contract_ids
 
     def __len__(self) -> int:
         return len(self.input_ids)
@@ -61,6 +63,8 @@ class PretokenizedSpanDataset(Dataset):
             item["char_start"] = self.char_starts[idx]
         if self.texts is not None:
             item["text"] = self.texts[idx]
+        if self.contract_ids is not None:
+            item["contract_id"] = self.contract_ids[idx]
         return item
 
 def build_span_dataset(
@@ -82,6 +86,7 @@ def build_span_dataset(
     masks_col = df["label_mask"].tolist()
     chunk_ids = df["chunk_id"].tolist() if include_metadata else None
     char_starts = df["char_start"].tolist() if include_metadata else None
+    contract_ids = df["contract_id"].tolist() if (include_metadata and "contract_id" in df.columns) else None
 
     for idx in range(len(df)):
         text = texts[idx]
@@ -118,18 +123,19 @@ def build_span_dataset(
         offset_mapping=all_offsets,
         chunk_ids=chunk_ids,
         char_starts=char_starts,
-        texts=texts if include_metadata else None
+        texts=texts if include_metadata else None,
+        contract_ids=contract_ids
     )
 
 def prepare_span_training_df(
     parquet_path: str,
     max_samples: Optional[int] = 1000,
-    pos_ratio: float = 0.80,
+    pos_ratio: float = 0.85,
     seed: int = RANDOM_SEED
 ) -> pd.DataFrame:
     """
-    Loads chunks for span extraction training:
-    - Focuses primarily on positive chunks (80% positives, 20% negatives).
+    Loads chunks for span extraction training with balanced multi-category coverage:
+    - Prioritizes positive chunks containing minority categories so every category is well-supervised.
     - Guarantees representation across all 9 categories.
     """
     cols = ["chunk_id", "contract_id", "text", "labels", "label_mask", "char_start", "char_end", "is_positive", "spans", "span_categories"]
@@ -138,16 +144,32 @@ def prepare_span_training_df(
     if max_samples is None or len(df) <= max_samples:
         return df
 
-    pos_df = df[df["is_positive"] == True]
-    neg_df = df[df["is_positive"] == False]
+    pos_df = df[df["is_positive"] == True].copy()
+    neg_df = df[df["is_positive"] == False].copy()
 
     n_pos = min(int(max_samples * pos_ratio), len(pos_df))
     n_neg = max_samples - n_pos
 
-    sampled_pos = pos_df.sample(n=n_pos, random_state=seed)
+    # Stratified minority priority: ensure underrepresented categories receive full quota
+    minority_cats = {"termination_for_convenience", "renewal_term", "non_compete", "ip_ownership_assignment"}
+    pos_df["has_minority"] = pos_df["span_categories"].apply(lambda cats: any(c in minority_cats for c in cats))
+
+    minority_chunks = pos_df[pos_df["has_minority"]]
+    other_pos_chunks = pos_df[~pos_df["has_minority"]]
+
+    remaining_pos = n_pos - len(minority_chunks)
+    if remaining_pos > 0:
+        sampled_other = other_pos_chunks.sample(n=min(remaining_pos, len(other_pos_chunks)), random_state=seed)
+        sampled_pos = pd.concat([minority_chunks, sampled_other])
+    else:
+        sampled_pos = minority_chunks.sample(n=n_pos, random_state=seed)
+
     sampled_neg = neg_df.sample(n=min(n_neg, len(neg_df)), random_state=seed)
 
     combined = pd.concat([sampled_pos, sampled_neg]).sample(frac=1.0, random_state=seed).reset_index(drop=True)
+    if "has_minority" in combined.columns:
+        combined = combined.drop(columns=["has_minority"])
+
     del df, pos_df, neg_df, sampled_pos, sampled_neg
     import gc; gc.collect()
 

@@ -117,7 +117,7 @@ def decode_spans_from_bio_tags(
     channel_whitelist: Optional[List[int]] = None,
     b_threshold: float = 0.15,
     span_threshold: float = 0.20,
-    min_chars: int = 1,
+    min_chars: int = 15,
     max_gap_tokens: int = 1
 ) -> List[Dict[str, Any]]:
     """
@@ -154,14 +154,14 @@ def decode_spans_from_bio_tags(
 
         i = 0
         while i < seq_len:
-            # Check for span start: tag B, or high B-probability, or IO recovery
+            # Check for span start: tag B, high B-probability, or strong IO recovery
             is_start = False
             if offset_mapping[i, 0] != offset_mapping[i, 1]:
                 if tags[i] == TAG_B:
                     is_start = True
-                elif probs[i, TAG_B] >= b_threshold and probs[i, TAG_B] > probs[i, TAG_I]:
+                elif probs[i, TAG_B] >= b_threshold:
                     is_start = True
-                elif tags[i] == TAG_I and (i == 0 or tags[i - 1] == TAG_O):
+                elif tags[i] == TAG_I and probs[i, TAG_I] >= 0.40 and probs[i, TAG_B] >= 0.05 and (i == 0 or tags[i - 1] == TAG_O):
                     is_start = True
 
             if is_start:
@@ -251,14 +251,15 @@ def merge_overlapping_clauses(
     if not clauses:
         return []
 
-    # Group by category
-    by_category: Dict[str, List[Dict[str, Any]]] = {}
+    # Group by (document_id, category) to prevent cross-contract merge corruption
+    by_doc_and_cat: Dict[Tuple[Any, str], List[Dict[str, Any]]] = {}
     for cl in clauses:
-        by_category.setdefault(cl["category"], []).append(cl)
+        doc_id = cl.get("document_id") or cl.get("contract_id")
+        by_doc_and_cat.setdefault((doc_id, cl["category"]), []).append(cl)
 
     merged_results = []
 
-    for cat_name, cat_clauses in by_category.items():
+    for (doc_id, cat_name), cat_clauses in by_doc_and_cat.items():
         # Sort by start_char then end_char
         sorted_clauses = sorted(cat_clauses, key=lambda c: (c["start_char"], c["end_char"]))
 

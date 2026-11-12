@@ -73,10 +73,19 @@ def run_test_evaluation(
     test_df = pd.read_parquet(TEST_PARQUET, columns=cols)
 
     all_test_gold_spans = []
+    seen_gold = set()
     for _, row in test_df.iterrows():
-        all_test_gold_spans.extend(row["spans"])
+        c_id = row["contract_id"]
+        for s in row["spans"]:
+            key = (c_id, s["category"], s["global_start"], s["global_end"])
+            if key not in seen_gold:
+                seen_gold.add(key)
+                g = dict(s)
+                g["contract_id"] = c_id
+                g["document_id"] = c_id
+                all_test_gold_spans.append(g)
 
-    print(f"Loaded {len(test_df):,} test chunks with {len(all_test_gold_spans):,} gold clause annotations.")
+    print(f"Loaded {len(test_df):,} test chunks with {len(all_test_gold_spans):,} unique gold clause annotations.")
 
     test_dataset = build_span_dataset(test_df, tokenizer, max_length=max_length, include_metadata=True)
     del test_df
@@ -104,6 +113,7 @@ def run_test_evaluation(
             chunk_ids = batch["chunk_id"]
             char_starts = batch["char_start"]
             texts = batch["text"]
+            contract_ids = batch.get("contract_id", [None] * b_size)
             b_size = len(input_ids)
 
             # Extractor forward pass (shared representation)
@@ -131,17 +141,18 @@ def run_test_evaluation(
                     chunk_text=texts[i],
                     chunk_char_start=int(char_starts[i]),
                     chunk_id=chunk_ids[i],
+                    document_id=contract_ids[i],
                     min_confidence=min_confidence,
                     b_threshold=b_threshold,
                     span_threshold=span_threshold
                 )
                 indep_raw_spans.extend(spans_indep)
 
-                # 2. Assisted decoding (gated channels only)
+                # 2. Assisted decoding (gated channels only using calibrated detection threshold)
                 clf_res = clf_batch[i]
                 active_channels = [
                     LABEL_TO_IDX[cat] for cat in LABEL_NAMES
-                    if clf_res["categories"][cat]["probability"] >= assist_threshold or clf_res["categories"][cat]["detected"]
+                    if clf_res["categories"][cat]["detected"]
                 ]
                 if active_channels:
                     spans_asst = decode_spans_from_bio_tags(
@@ -151,6 +162,7 @@ def run_test_evaluation(
                         chunk_text=texts[i],
                         chunk_char_start=int(char_starts[i]),
                         chunk_id=chunk_ids[i],
+                        document_id=contract_ids[i],
                         min_confidence=min_confidence,
                         channel_whitelist=active_channels,
                         b_threshold=b_threshold,

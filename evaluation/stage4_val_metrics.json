@@ -1,205 +1,205 @@
 {
-  "total_gold_spans": 626,
-  "total_predicted_spans": 4401,
+  "total_gold_spans": 623,
+  "total_predicted_spans": 11202,
   "exact_match": {
-    "macro_precision": 0.0002,
-    "macro_recall": 0.0021,
-    "macro_f1": 0.0003,
-    "micro_precision": 0.0002,
-    "micro_recall": 0.0016,
-    "micro_f1": 0.0004
+    "macro_precision": 0.0015,
+    "macro_recall": 0.0161,
+    "macro_f1": 0.0027,
+    "micro_precision": 0.0008,
+    "micro_recall": 0.0144,
+    "micro_f1": 0.0015
   },
   "partial_match_iou50": {
-    "macro_precision": 0.0089,
-    "macro_recall": 0.0803,
-    "macro_f1": 0.0155,
-    "micro_precision": 0.0093,
-    "micro_recall": 0.0655,
-    "micro_f1": 0.0163
+    "macro_precision": 0.0204,
+    "macro_recall": 0.2227,
+    "macro_f1": 0.0357,
+    "micro_precision": 0.0123,
+    "micro_recall": 0.2215,
+    "micro_f1": 0.0233
   },
   "per_category": {
     "liability_cap": {
       "gold_count": 85,
-      "pred_count": 360,
+      "pred_count": 280,
       "exact_match": {
-        "tp": 0,
-        "fp": 360,
-        "fn": 85,
-        "precision": 0.0,
-        "recall": 0.0,
-        "f1": 0.0
+        "tp": 1,
+        "fp": 279,
+        "fn": 84,
+        "precision": 0.0036,
+        "recall": 0.0118,
+        "f1": 0.0055
       },
       "partial_match_iou50": {
-        "tp": 7,
-        "fp": 353,
-        "fn": 78,
-        "precision": 0.0194,
-        "recall": 0.0824,
-        "f1": 0.0315
+        "tp": 16,
+        "fp": 264,
+        "fn": 69,
+        "precision": 0.0571,
+        "recall": 0.1882,
+        "f1": 0.0877
       }
     },
     "termination_for_convenience": {
       "gold_count": 30,
-      "pred_count": 552,
+      "pred_count": 1006,
       "exact_match": {
         "tp": 0,
-        "fp": 552,
+        "fp": 1006,
         "fn": 30,
         "precision": 0.0,
         "recall": 0.0,
         "f1": 0.0
       },
       "partial_match_iou50": {
-        "tp": 1,
-        "fp": 551,
-        "fn": 29,
-        "precision": 0.0018,
-        "recall": 0.0333,
-        "f1": 0.0034
+        "tp": 6,
+        "fp": 1000,
+        "fn": 24,
+        "precision": 0.006,
+        "recall": 0.2,
+        "f1": 0.0116
       }
     },
     "anti_assignment": {
       "gold_count": 92,
-      "pred_count": 512,
+      "pred_count": 1240,
       "exact_match": {
-        "tp": 0,
-        "fp": 512,
-        "fn": 92,
-        "precision": 0.0,
-        "recall": 0.0,
-        "f1": 0.0
+        "tp": 1,
+        "fp": 1239,
+        "fn": 91,
+        "precision": 0.0008,
+        "recall": 0.0109,
+        "f1": 0.0015
       },
       "partial_match_iou50": {
-        "tp": 5,
-        "fp": 507,
-        "fn": 87,
-        "precision": 0.0098,
-        "recall": 0.0543,
-        "f1": 0.0166
+        "tp": 24,
+        "fp": 1216,
+        "fn": 68,
+        "precision": 0.0194,
+        "recall": 0.2609,
+        "f1": 0.036
       }
     },
     "renewal_term": {
-      "gold_count": 38,
-      "pred_count": 570,
+      "gold_count": 37,
+      "pred_count": 709,
       "exact_match": {
-        "tp": 0,
-        "fp": 570,
-        "fn": 38,
-        "precision": 0.0,
-        "recall": 0.0,
-        "f1": 0.0
+        "tp": 1,
+        "fp": 708,
+        "fn": 36,
+        "precision": 0.0014,
+        "recall": 0.027,
+        "f1": 0.0027
       },
       "partial_match_iou50": {
-        "tp": 4,
-        "fp": 566,
-        "fn": 34,
-        "precision": 0.007,
-        "recall": 0.1053,
-        "f1": 0.0132
+        "tp": 8,
+        "fp": 701,
+        "fn": 29,
+        "precision": 0.0113,
+        "recall": 0.2162,
+        "f1": 0.0214
       }
     },
     "governing_law": {
-      "gold_count": 54,
-      "pred_count": 725,
+      "gold_count": 53,
+      "pred_count": 453,
       "exact_match": {
-        "tp": 1,
-        "fp": 724,
-        "fn": 53,
-        "precision": 0.0014,
-        "recall": 0.0185,
-        "f1": 0.0026
+        "tp": 3,
+        "fp": 450,
+        "fn": 50,
+        "precision": 0.0066,
+        "recall": 0.0566,
+        "f1": 0.0119
       },
       "partial_match_iou50": {
-        "tp": 12,
-        "fp": 713,
-        "fn": 42,
-        "precision": 0.0166,
-        "recall": 0.2222,
-        "f1": 0.0308
+        "tp": 26,
+        "fp": 427,
+        "fn": 27,
+        "precision": 0.0574,
+        "recall": 0.4906,
+        "f1": 0.1028
       }
     },
     "audit_rights": {
-      "gold_count": 111,
-      "pred_count": 267,
+      "gold_count": 110,
+      "pred_count": 1959,
       "exact_match": {
-        "tp": 0,
-        "fp": 267,
-        "fn": 111,
-        "precision": 0.0,
-        "recall": 0.0,
-        "f1": 0.0
+        "tp": 1,
+        "fp": 1958,
+        "fn": 109,
+        "precision": 0.0005,
+        "recall": 0.0091,
+        "f1": 0.001
       },
       "partial_match_iou50": {
-        "tp": 0,
-        "fp": 267,
-        "fn": 111,
-        "precision": 0.0,
-        "recall": 0.0,
-        "f1": 0.0
+        "tp": 25,
+        "fp": 1934,
+        "fn": 85,
+        "precision": 0.0128,
+        "recall": 0.2273,
+        "f1": 0.0242
       }
     },
     "ip_ownership_assignment": {
       "gold_count": 46,
-      "pred_count": 498,
+      "pred_count": 2280,
       "exact_match": {
-        "tp": 0,
-        "fp": 498,
-        "fn": 46,
-        "precision": 0.0,
-        "recall": 0.0,
-        "f1": 0.0
+        "tp": 1,
+        "fp": 2279,
+        "fn": 45,
+        "precision": 0.0004,
+        "recall": 0.0217,
+        "f1": 0.0009
       },
       "partial_match_iou50": {
-        "tp": 3,
-        "fp": 495,
-        "fn": 43,
-        "precision": 0.006,
-        "recall": 0.0652,
-        "f1": 0.011
+        "tp": 4,
+        "fp": 2276,
+        "fn": 42,
+        "precision": 0.0018,
+        "recall": 0.087,
+        "f1": 0.0034
       }
     },
     "license_grant": {
       "gold_count": 126,
-      "pred_count": 413,
+      "pred_count": 1568,
       "exact_match": {
-        "tp": 0,
-        "fp": 413,
-        "fn": 126,
-        "precision": 0.0,
-        "recall": 0.0,
-        "f1": 0.0
+        "tp": 1,
+        "fp": 1567,
+        "fn": 125,
+        "precision": 0.0006,
+        "recall": 0.0079,
+        "f1": 0.0012
       },
       "partial_match_iou50": {
-        "tp": 3,
-        "fp": 410,
-        "fn": 123,
-        "precision": 0.0073,
-        "recall": 0.0238,
-        "f1": 0.0111
+        "tp": 22,
+        "fp": 1546,
+        "fn": 104,
+        "precision": 0.014,
+        "recall": 0.1746,
+        "f1": 0.026
       }
     },
     "non_compete": {
       "gold_count": 44,
-      "pred_count": 504,
+      "pred_count": 1707,
       "exact_match": {
         "tp": 0,
-        "fp": 504,
+        "fp": 1707,
         "fn": 44,
         "precision": 0.0,
         "recall": 0.0,
         "f1": 0.0
       },
       "partial_match_iou50": {
-        "tp": 6,
-        "fp": 498,
-        "fn": 38,
-        "precision": 0.0119,
-        "recall": 0.1364,
-        "f1": 0.0219
+        "tp": 7,
+        "fp": 1700,
+        "fn": 37,
+        "precision": 0.0041,
+        "recall": 0.1591,
+        "f1": 0.008
       }
     }
   },
-  "validation_loss": 0.0517,
-  "training_time_seconds": 419.6,
+  "validation_loss": 0.0514,
+  "training_time_seconds": 1283.3,
   "checkpoint_dir": "ml\\checkpoints\\span_extractor\\best_checkpoint"
 }

@@ -1,0 +1,762 @@
+[
+  {
+    "strategy": "Strategy 1: Loose Independent (min_chars=15, b=0.15, span=0.20, min_conf=0.20)",
+    "pred_spans": 11202,
+    "exact_macro_f1": 0.0027,
+    "iou50_macro_precision": 0.0204,
+    "iou50_macro_recall": 0.2227,
+    "iou50_macro_f1": 0.0357,
+    "per_category": {
+      "liability_cap": {
+        "gold_count": 85,
+        "pred_count": 280,
+        "exact_match": {
+          "tp": 1,
+          "fp": 279,
+          "fn": 84,
+          "precision": 0.0036,
+          "recall": 0.0118,
+          "f1": 0.0055
+        },
+        "partial_match_iou50": {
+          "tp": 16,
+          "fp": 264,
+          "fn": 69,
+          "precision": 0.0571,
+          "recall": 0.1882,
+          "f1": 0.0877
+        }
+      },
+      "termination_for_convenience": {
+        "gold_count": 30,
+        "pred_count": 1006,
+        "exact_match": {
+          "tp": 0,
+          "fp": 1006,
+          "fn": 30,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "partial_match_iou50": {
+          "tp": 6,
+          "fp": 1000,
+          "fn": 24,
+          "precision": 0.006,
+          "recall": 0.2,
+          "f1": 0.0116
+        }
+      },
+      "anti_assignment": {
+        "gold_count": 92,
+        "pred_count": 1240,
+        "exact_match": {
+          "tp": 1,
+          "fp": 1239,
+          "fn": 91,
+          "precision": 0.0008,
+          "recall": 0.0109,
+          "f1": 0.0015
+        },
+        "partial_match_iou50": {
+          "tp": 24,
+          "fp": 1216,
+          "fn": 68,
+          "precision": 0.0194,
+          "recall": 0.2609,
+          "f1": 0.036
+        }
+      },
+      "renewal_term": {
+        "gold_count": 37,
+        "pred_count": 709,
+        "exact_match": {
+          "tp": 1,
+          "fp": 708,
+          "fn": 36,
+          "precision": 0.0014,
+          "recall": 0.027,
+          "f1": 0.0027
+        },
+        "partial_match_iou50": {
+          "tp": 8,
+          "fp": 701,
+          "fn": 29,
+          "precision": 0.0113,
+          "recall": 0.2162,
+          "f1": 0.0214
+        }
+      },
+      "governing_law": {
+        "gold_count": 53,
+        "pred_count": 453,
+        "exact_match": {
+          "tp": 3,
+          "fp": 450,
+          "fn": 50,
+          "precision": 0.0066,
+          "recall": 0.0566,
+          "f1": 0.0119
+        },
+        "partial_match_iou50": {
+          "tp": 26,
+          "fp": 427,
+          "fn": 27,
+          "precision": 0.0574,
+          "recall": 0.4906,
+          "f1": 0.1028
+        }
+      },
+      "audit_rights": {
+        "gold_count": 110,
+        "pred_count": 1959,
+        "exact_match": {
+          "tp": 1,
+          "fp": 1958,
+          "fn": 109,
+          "precision": 0.0005,
+          "recall": 0.0091,
+          "f1": 0.001
+        },
+        "partial_match_iou50": {
+          "tp": 25,
+          "fp": 1934,
+          "fn": 85,
+          "precision": 0.0128,
+          "recall": 0.2273,
+          "f1": 0.0242
+        }
+      },
+      "ip_ownership_assignment": {
+        "gold_count": 46,
+        "pred_count": 2280,
+        "exact_match": {
+          "tp": 1,
+          "fp": 2279,
+          "fn": 45,
+          "precision": 0.0004,
+          "recall": 0.0217,
+          "f1": 0.0009
+        },
+        "partial_match_iou50": {
+          "tp": 4,
+          "fp": 2276,
+          "fn": 42,
+          "precision": 0.0018,
+          "recall": 0.087,
+          "f1": 0.0034
+        }
+      },
+      "license_grant": {
+        "gold_count": 126,
+        "pred_count": 1568,
+        "exact_match": {
+          "tp": 1,
+          "fp": 1567,
+          "fn": 125,
+          "precision": 0.0006,
+          "recall": 0.0079,
+          "f1": 0.0012
+        },
+        "partial_match_iou50": {
+          "tp": 22,
+          "fp": 1546,
+          "fn": 104,
+          "precision": 0.014,
+          "recall": 0.1746,
+          "f1": 0.026
+        }
+      },
+      "non_compete": {
+        "gold_count": 44,
+        "pred_count": 1707,
+        "exact_match": {
+          "tp": 0,
+          "fp": 1707,
+          "fn": 44,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "partial_match_iou50": {
+          "tp": 7,
+          "fp": 1700,
+          "fn": 37,
+          "precision": 0.0041,
+          "recall": 0.1591,
+          "f1": 0.008
+        }
+      }
+    }
+  },
+  {
+    "strategy": "Strategy 2: Calibrated Independent (min_chars=35, b=0.25, span=0.30, min_conf=0.25)",
+    "pred_spans": 4598,
+    "exact_macro_f1": 0.0066,
+    "iou50_macro_precision": 0.0515,
+    "iou50_macro_recall": 0.2296,
+    "iou50_macro_f1": 0.0805,
+    "per_category": {
+      "liability_cap": {
+        "gold_count": 85,
+        "pred_count": 173,
+        "exact_match": {
+          "tp": 2,
+          "fp": 171,
+          "fn": 83,
+          "precision": 0.0116,
+          "recall": 0.0235,
+          "f1": 0.0155
+        },
+        "partial_match_iou50": {
+          "tp": 18,
+          "fp": 155,
+          "fn": 67,
+          "precision": 0.104,
+          "recall": 0.2118,
+          "f1": 0.1395
+        }
+      },
+      "termination_for_convenience": {
+        "gold_count": 30,
+        "pred_count": 397,
+        "exact_match": {
+          "tp": 0,
+          "fp": 397,
+          "fn": 30,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "partial_match_iou50": {
+          "tp": 6,
+          "fp": 391,
+          "fn": 24,
+          "precision": 0.0151,
+          "recall": 0.2,
+          "f1": 0.0281
+        }
+      },
+      "anti_assignment": {
+        "gold_count": 92,
+        "pred_count": 440,
+        "exact_match": {
+          "tp": 2,
+          "fp": 438,
+          "fn": 90,
+          "precision": 0.0045,
+          "recall": 0.0217,
+          "f1": 0.0075
+        },
+        "partial_match_iou50": {
+          "tp": 29,
+          "fp": 411,
+          "fn": 63,
+          "precision": 0.0659,
+          "recall": 0.3152,
+          "f1": 0.109
+        }
+      },
+      "renewal_term": {
+        "gold_count": 37,
+        "pred_count": 256,
+        "exact_match": {
+          "tp": 1,
+          "fp": 255,
+          "fn": 36,
+          "precision": 0.0039,
+          "recall": 0.027,
+          "f1": 0.0068
+        },
+        "partial_match_iou50": {
+          "tp": 10,
+          "fp": 246,
+          "fn": 27,
+          "precision": 0.0391,
+          "recall": 0.2703,
+          "f1": 0.0683
+        }
+      },
+      "governing_law": {
+        "gold_count": 53,
+        "pred_count": 166,
+        "exact_match": {
+          "tp": 3,
+          "fp": 163,
+          "fn": 50,
+          "precision": 0.0181,
+          "recall": 0.0566,
+          "f1": 0.0274
+        },
+        "partial_match_iou50": {
+          "tp": 29,
+          "fp": 137,
+          "fn": 24,
+          "precision": 0.1747,
+          "recall": 0.5472,
+          "f1": 0.2648
+        }
+      },
+      "audit_rights": {
+        "gold_count": 110,
+        "pred_count": 853,
+        "exact_match": {
+          "tp": 0,
+          "fp": 853,
+          "fn": 110,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "partial_match_iou50": {
+          "tp": 20,
+          "fp": 833,
+          "fn": 90,
+          "precision": 0.0234,
+          "recall": 0.1818,
+          "f1": 0.0415
+        }
+      },
+      "ip_ownership_assignment": {
+        "gold_count": 46,
+        "pred_count": 998,
+        "exact_match": {
+          "tp": 0,
+          "fp": 998,
+          "fn": 46,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "partial_match_iou50": {
+          "tp": 3,
+          "fp": 995,
+          "fn": 43,
+          "precision": 0.003,
+          "recall": 0.0652,
+          "f1": 0.0057
+        }
+      },
+      "license_grant": {
+        "gold_count": 126,
+        "pred_count": 792,
+        "exact_match": {
+          "tp": 1,
+          "fp": 791,
+          "fn": 125,
+          "precision": 0.0013,
+          "recall": 0.0079,
+          "f1": 0.0022
+        },
+        "partial_match_iou50": {
+          "tp": 26,
+          "fp": 766,
+          "fn": 100,
+          "precision": 0.0328,
+          "recall": 0.2063,
+          "f1": 0.0566
+        }
+      },
+      "non_compete": {
+        "gold_count": 44,
+        "pred_count": 523,
+        "exact_match": {
+          "tp": 0,
+          "fp": 523,
+          "fn": 44,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "partial_match_iou50": {
+          "tp": 3,
+          "fp": 520,
+          "fn": 41,
+          "precision": 0.0057,
+          "recall": 0.0682,
+          "f1": 0.0106
+        }
+      }
+    }
+  },
+  {
+    "strategy": "Strategy 3: Calibrated Classifier-Assisted (min_chars=15, b=0.15, span=0.20, min_conf=0.20, gated)",
+    "pred_spans": 1388,
+    "exact_macro_f1": 0.0044,
+    "iou50_macro_precision": 0.0649,
+    "iou50_macro_recall": 0.0764,
+    "iou50_macro_f1": 0.0622,
+    "per_category": {
+      "liability_cap": {
+        "gold_count": 85,
+        "pred_count": 49,
+        "exact_match": {
+          "tp": 1,
+          "fp": 48,
+          "fn": 84,
+          "precision": 0.0204,
+          "recall": 0.0118,
+          "f1": 0.0149
+        },
+        "partial_match_iou50": {
+          "tp": 11,
+          "fp": 38,
+          "fn": 74,
+          "precision": 0.2245,
+          "recall": 0.1294,
+          "f1": 0.1642
+        }
+      },
+      "termination_for_convenience": {
+        "gold_count": 30,
+        "pred_count": 147,
+        "exact_match": {
+          "tp": 0,
+          "fp": 147,
+          "fn": 30,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "partial_match_iou50": {
+          "tp": 0,
+          "fp": 147,
+          "fn": 30,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "anti_assignment": {
+        "gold_count": 92,
+        "pred_count": 80,
+        "exact_match": {
+          "tp": 0,
+          "fp": 80,
+          "fn": 92,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "partial_match_iou50": {
+          "tp": 8,
+          "fp": 72,
+          "fn": 84,
+          "precision": 0.1,
+          "recall": 0.087,
+          "f1": 0.093
+        }
+      },
+      "renewal_term": {
+        "gold_count": 37,
+        "pred_count": 63,
+        "exact_match": {
+          "tp": 0,
+          "fp": 63,
+          "fn": 37,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "partial_match_iou50": {
+          "tp": 1,
+          "fp": 62,
+          "fn": 36,
+          "precision": 0.0159,
+          "recall": 0.027,
+          "f1": 0.02
+        }
+      },
+      "governing_law": {
+        "gold_count": 53,
+        "pred_count": 83,
+        "exact_match": {
+          "tp": 1,
+          "fp": 82,
+          "fn": 52,
+          "precision": 0.012,
+          "recall": 0.0189,
+          "f1": 0.0147
+        },
+        "partial_match_iou50": {
+          "tp": 9,
+          "fp": 74,
+          "fn": 44,
+          "precision": 0.1084,
+          "recall": 0.1698,
+          "f1": 0.1324
+        }
+      },
+      "audit_rights": {
+        "gold_count": 110,
+        "pred_count": 134,
+        "exact_match": {
+          "tp": 0,
+          "fp": 134,
+          "fn": 110,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "partial_match_iou50": {
+          "tp": 6,
+          "fp": 128,
+          "fn": 104,
+          "precision": 0.0448,
+          "recall": 0.0545,
+          "f1": 0.0492
+        }
+      },
+      "ip_ownership_assignment": {
+        "gold_count": 46,
+        "pred_count": 312,
+        "exact_match": {
+          "tp": 1,
+          "fp": 311,
+          "fn": 45,
+          "precision": 0.0032,
+          "recall": 0.0217,
+          "f1": 0.0056
+        },
+        "partial_match_iou50": {
+          "tp": 3,
+          "fp": 309,
+          "fn": 43,
+          "precision": 0.0096,
+          "recall": 0.0652,
+          "f1": 0.0168
+        }
+      },
+      "license_grant": {
+        "gold_count": 126,
+        "pred_count": 113,
+        "exact_match": {
+          "tp": 0,
+          "fp": 113,
+          "fn": 126,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "partial_match_iou50": {
+          "tp": 8,
+          "fp": 105,
+          "fn": 118,
+          "precision": 0.0708,
+          "recall": 0.0635,
+          "f1": 0.0669
+        }
+      },
+      "non_compete": {
+        "gold_count": 44,
+        "pred_count": 407,
+        "exact_match": {
+          "tp": 1,
+          "fp": 406,
+          "fn": 43,
+          "precision": 0.0025,
+          "recall": 0.0227,
+          "f1": 0.0044
+        },
+        "partial_match_iou50": {
+          "tp": 4,
+          "fp": 403,
+          "fn": 40,
+          "precision": 0.0098,
+          "recall": 0.0909,
+          "f1": 0.0177
+        }
+      }
+    }
+  },
+  {
+    "strategy": "Strategy 4: Optimized Classifier-Assisted (min_chars=35, b=0.25, span=0.30, min_conf=0.25, gated)",
+    "pred_spans": 867,
+    "exact_macro_f1": 0.0063,
+    "iou50_macro_precision": 0.1031,
+    "iou50_macro_recall": 0.0828,
+    "iou50_macro_f1": 0.086,
+    "per_category": {
+      "liability_cap": {
+        "gold_count": 85,
+        "pred_count": 37,
+        "exact_match": {
+          "tp": 1,
+          "fp": 36,
+          "fn": 84,
+          "precision": 0.027,
+          "recall": 0.0118,
+          "f1": 0.0164
+        },
+        "partial_match_iou50": {
+          "tp": 12,
+          "fp": 25,
+          "fn": 73,
+          "precision": 0.3243,
+          "recall": 0.1412,
+          "f1": 0.1967
+        }
+      },
+      "termination_for_convenience": {
+        "gold_count": 30,
+        "pred_count": 84,
+        "exact_match": {
+          "tp": 0,
+          "fp": 84,
+          "fn": 30,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "partial_match_iou50": {
+          "tp": 0,
+          "fp": 84,
+          "fn": 30,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "anti_assignment": {
+        "gold_count": 92,
+        "pred_count": 69,
+        "exact_match": {
+          "tp": 0,
+          "fp": 69,
+          "fn": 92,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "partial_match_iou50": {
+          "tp": 11,
+          "fp": 58,
+          "fn": 81,
+          "precision": 0.1594,
+          "recall": 0.1196,
+          "f1": 0.1366
+        }
+      },
+      "renewal_term": {
+        "gold_count": 37,
+        "pred_count": 48,
+        "exact_match": {
+          "tp": 0,
+          "fp": 48,
+          "fn": 37,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "partial_match_iou50": {
+          "tp": 3,
+          "fp": 45,
+          "fn": 34,
+          "precision": 0.0625,
+          "recall": 0.0811,
+          "f1": 0.0706
+        }
+      },
+      "governing_law": {
+        "gold_count": 53,
+        "pred_count": 47,
+        "exact_match": {
+          "tp": 2,
+          "fp": 45,
+          "fn": 51,
+          "precision": 0.0426,
+          "recall": 0.0377,
+          "f1": 0.04
+        },
+        "partial_match_iou50": {
+          "tp": 9,
+          "fp": 38,
+          "fn": 44,
+          "precision": 0.1915,
+          "recall": 0.1698,
+          "f1": 0.18
+        }
+      },
+      "audit_rights": {
+        "gold_count": 110,
+        "pred_count": 103,
+        "exact_match": {
+          "tp": 0,
+          "fp": 103,
+          "fn": 110,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "partial_match_iou50": {
+          "tp": 8,
+          "fp": 95,
+          "fn": 102,
+          "precision": 0.0777,
+          "recall": 0.0727,
+          "f1": 0.0751
+        }
+      },
+      "ip_ownership_assignment": {
+        "gold_count": 46,
+        "pred_count": 222,
+        "exact_match": {
+          "tp": 0,
+          "fp": 222,
+          "fn": 46,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "partial_match_iou50": {
+          "tp": 2,
+          "fp": 220,
+          "fn": 44,
+          "precision": 0.009,
+          "recall": 0.0435,
+          "f1": 0.0149
+        }
+      },
+      "license_grant": {
+        "gold_count": 126,
+        "pred_count": 99,
+        "exact_match": {
+          "tp": 0,
+          "fp": 99,
+          "fn": 126,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "partial_match_iou50": {
+          "tp": 9,
+          "fp": 90,
+          "fn": 117,
+          "precision": 0.0909,
+          "recall": 0.0714,
+          "f1": 0.08
+        }
+      },
+      "non_compete": {
+        "gold_count": 44,
+        "pred_count": 158,
+        "exact_match": {
+          "tp": 0,
+          "fp": 158,
+          "fn": 44,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "partial_match_iou50": {
+          "tp": 2,
+          "fp": 156,
+          "fn": 42,
+          "precision": 0.0127,
+          "recall": 0.0455,
+          "f1": 0.0198
+        }
+      }
+    }
+  }
+]
