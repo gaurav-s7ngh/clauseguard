@@ -40,3 +40,8 @@ scratch/
 # OS files
 .DS_Store
 Thumbs.db
+
+# SQLite local databases
+*.db
+*.sqlite
+*.sqlite3

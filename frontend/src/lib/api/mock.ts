@@ -8,7 +8,7 @@ import type {
   RiskLevel,
   UploadResponse
 } from '../../types/analysis';
-import type { ClauseGuardApiClient } from './types';
+import type { ClauseGuardApiClient, RawClauseDTO } from './types';
 import { adaptAnalysisResult } from './adapters';
 
 export const SAMPLE_CONTRACT_TEXT = `MASTER CLOUD SERVICES AND PLATFORM SUBSCRIPTION AGREEMENT
@@ -324,6 +324,141 @@ export function getMockAnalysisResult(documentId = 'doc_mock_sample_master'): An
 /**
  * Mock API Client implementing ClauseGuardApiClient interface
  */
+function extractDynamicClausesFromText(text: string, docId: string): RawClauseDTO[] {
+  const patterns: Array<{
+    category: string;
+    regex: RegExp;
+    risk_level: string;
+    risk_score: number;
+    explanation: string;
+    why_it_matters: string;
+    suggestion?: string;
+  }> = [
+    {
+      category: 'liability_cap',
+      regex: /(?:in\s+no\s+event\s+shall|limitation\s+of\s+liability|aggregate\s+liability|maximum\s+liability|liability\s+(?:shall|is|will\s+not)\s+exceed|consequential\s+damages)[^.\n]+(?:\.[^.\n]+)?/i,
+      risk_level: 'CRITICAL',
+      risk_score: 9,
+      explanation: 'Caps the total monetary compensation or excludes indirect damages.',
+      why_it_matters: 'If the other party causes major financial harm, you may not be able to recover your losses.',
+      suggestion: 'Ensure the cap is mutual and excludes breaches of confidentiality or gross negligence.'
+    },
+    {
+      category: 'termination_for_convenience',
+      regex: /(?:terminate\s+(?:this\s+agreement\s+)?(?:at\s+any\s+time\s+)?without\s+cause|termination\s+for\s+convenience|upon\s+\d+\s+days['’]?\s+(?:prior\s+)?written\s+notice)[^.\n]+(?:\.[^.\n]+)?/i,
+      risk_level: 'HIGH',
+      risk_score: 8,
+      explanation: 'Allows ending the contract early without needing to prove a breach or wrongdoing.',
+      why_it_matters: 'The contract can be canceled abruptly with minimal warning, impacting planning and cash flow.',
+      suggestion: 'Require at least 30 to 60 days written notice and reimbursement for unrecoverable expenses.'
+    },
+    {
+      category: 'anti_assignment',
+      regex: /(?:neither\s+party\s+may\s+assign|shall\s+not\s+assign|assignment\s+without\s+(?:the\s+)?prior\s+written\s+consent|no\s+assignment)[^.\n]+(?:\.[^.\n]+)?/i,
+      risk_level: 'MEDIUM',
+      risk_score: 6,
+      explanation: 'Restricts transferring contract rights or obligations to a third party or buyer.',
+      why_it_matters: 'Can block company acquisition, corporate restructuring, or assigning invoices.',
+      suggestion: 'Add an exception allowing assignment in connection with a merger or sale of substantially all assets.'
+    },
+    {
+      category: 'renewal_term',
+      regex: /(?:automatically\s+renew|automatic\s+renewal|renewal\s+term|successive\s+(?:terms|periods)|evergreen)[^.\n]+(?:\.[^.\n]+)?/i,
+      risk_level: 'HIGH',
+      risk_score: 8,
+      explanation: 'The contract automatically extends for another term unless canceled in advance.',
+      why_it_matters: 'Missing the cancellation window locks you into paying for another full term.',
+      suggestion: 'Set a calendar reminder before the non-renewal notice deadline.'
+    },
+    {
+      category: 'governing_law',
+      regex: /(?:governed\s+by\s+and\s+construed\s+in\s+accordance\s+with|choice\s+of\s+law|jurisdiction\s+and\s+venue|laws\s+of\s+the\s+state\s+of)[^.\n]+(?:\.[^.\n]+)?/i,
+      risk_level: 'LOW',
+      risk_score: 3,
+      explanation: 'Determines which state or country laws apply if a legal dispute arises.',
+      why_it_matters: 'Resolving disputes in distant courts increases travel and litigation costs.',
+      suggestion: 'Prefer your home state jurisdiction or mutual neutral arbitration.'
+    },
+    {
+      category: 'audit_rights',
+      regex: /(?:right\s+to\s+audit|audit\s+rights|inspect\s+(?:the\s+)?books\s+and\s+records|audit\s+and\s+inspect)[^.\n]+(?:\.[^.\n]+)?/i,
+      risk_level: 'MEDIUM',
+      risk_score: 6,
+      explanation: 'Allows one party to inspect systems, accounting records, or facilities.',
+      why_it_matters: 'Unrestricted audits can be disruptive and expose confidential information.',
+      suggestion: 'Limit audits to once per year, during normal business hours, with at least 15 days notice.'
+    },
+    {
+      category: 'ip_ownership_assignment',
+      regex: /(?:work\s+made\s+for\s+hire|hereby\s+assigns\s+all\s+right|all\s+right,\s*title\s+and\s+interest|sole\s+and\s+exclusive\s+property)[^.\n]+(?:\.[^.\n]+)?/i,
+      risk_level: 'CRITICAL',
+      risk_score: 9,
+      explanation: 'Transfers ownership of all created materials, designs, or code to the other party.',
+      why_it_matters: 'You may lose rights to your own background tools, pre-existing IP, and templates.',
+      suggestion: 'Retain ownership of your pre-existing tools and grant a license instead.'
+    },
+    {
+      category: 'license_grant',
+      regex: /(?:hereby\s+grants?\s+(?:a\s+)?(?:non-exclusive|exclusive|worldwide|royalty-free|perpetual|irrevocable)\s+license|grant\s+of\s+license|license\s+to\s+use)[^.\n]+(?:\.[^.\n]+)?/i,
+      risk_level: 'LOW',
+      risk_score: 3,
+      explanation: 'Grants permission to use software, content, or services under specified terms.',
+      why_it_matters: 'Defines what you are allowed to do with the licensed product.',
+      suggestion: 'Verify that the license scope matches your expected operational needs.'
+    },
+    {
+      category: 'non_compete',
+      regex: /(?:non-?compete|covenant\s+not\s+to\s+compete|shall\s+not\s+(?:directly\s+or\s+indirectly\s+)?engage\s+in\s+any\s+competitive|restrictive\s+covenant)[^.\n]+(?:\.[^.\n]+)?/i,
+      risk_level: 'CRITICAL',
+      risk_score: 9,
+      explanation: 'Restricts working with competitors or operating in the same industry after the contract ends.',
+      why_it_matters: 'Can severely prevent you from earning income or taking new clients.',
+      suggestion: 'Narrow the geographic scope and duration (e.g. max 6 months), or negotiate its removal.'
+    }
+  ];
+
+  const results: RawClauseDTO[] = [];
+  const paragraphs = text.split(/\n\s*\n/).filter((p) => p.trim().length > 0);
+
+  paragraphs.forEach((p, idx) => {
+    for (const pat of patterns) {
+      const match = p.match(pat.regex);
+      if (match) {
+        const clauseSnippet = match[0].trim();
+        const start = text.indexOf(p);
+        if (start !== -1) {
+          const innerOffset = p.indexOf(clauseSnippet);
+          const s = innerOffset !== -1 ? start + innerOffset : start;
+          const e = s + (innerOffset !== -1 ? clauseSnippet.length : p.length);
+          const exactText = text.slice(s, e);
+
+          results.push({
+            category: pat.category,
+            clause_text: exactText,
+            start_char: s,
+            end_char: e,
+            confidence: 0.95,
+            chunk_id: `chunk_${idx}`,
+            document_id: docId,
+            page_number: 1,
+            surrounding_context: text.slice(Math.max(0, s - 100), Math.min(text.length, e + 100)),
+            model_version: 'clauseguard-pattern-v1',
+            extraction_status: 'extracted',
+            risk_level: pat.risk_level,
+            risk_score: pat.risk_score,
+            risk_reasoning: pat.why_it_matters,
+            plain_english_explanation: pat.explanation,
+            suggested_modification: pat.suggestion
+          });
+        }
+        break;
+      }
+    }
+  });
+
+  return results;
+}
+
 export class MockClauseGuardApiClient implements ClauseGuardApiClient {
   private documents: Map<string, AnalysisResult> = new Map();
   private statuses: Map<string, 'pending' | 'processing' | 'completed' | 'failed'> = new Map();
@@ -339,19 +474,28 @@ export class MockClauseGuardApiClient implements ClauseGuardApiClient {
 
     // Read the text from file if possible, or fallback to sample
     let fileText = SAMPLE_CONTRACT_TEXT;
+    let isRealTextUpload = false;
     try {
       if (file.type.includes('text') || file.name.endsWith('.txt')) {
         fileText = await file.text();
+        isRealTextUpload = true;
       }
     } catch {
       fileText = SAMPLE_CONTRACT_TEXT;
     }
 
-    // Adapt sample clauses or generate realistic mock results
-    const clauses = getMockSampleClauses().map((c) => ({
-      ...c,
-      document_id: docId
-    }));
+    let clauses: RawClauseDTO[];
+    if (isRealTextUpload) {
+      const dynamicClauses = extractDynamicClausesFromText(fileText, docId);
+      clauses = dynamicClauses.length > 0
+        ? dynamicClauses
+        : getMockSampleClauses().map((c) => ({ ...c, document_id: docId }));
+    } else {
+      clauses = getMockSampleClauses().map((c) => ({
+        ...c,
+        document_id: docId
+      }));
+    }
 
     const result = adaptAnalysisResult({
       document_id: docId,

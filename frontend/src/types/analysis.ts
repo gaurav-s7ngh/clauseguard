@@ -68,7 +68,7 @@ export interface AnalysisStatusResponse {
 }
 
 export interface HealthCheckResponse {
-  status: 'healthy' | 'degraded' | 'offline';
+  status: 'healthy' | 'ok' | 'degraded' | 'offline';
   version?: string;
   model_loaded?: boolean;
 }
