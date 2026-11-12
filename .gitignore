@@ -1,0 +1,40 @@
+
+# Python virtual environments
+venv/
+.venv/
+**/venv/
+**/.venv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Environment variables
+.env
+.env.*
+
+# Frontend dependencies
+node_modules/
+frontend/node_modules/
+dist/
+
+# ML datasets
+ml/data/raw/
+ml/data/processed/
+ml/data/splits/
+
+# Model checkpoints
+ml/checkpoints/
+*.pt
+*.pth
+*.bin
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDE
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
