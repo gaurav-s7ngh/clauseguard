@@ -1,0 +1,329 @@
+{
+  "model_alias": "roberta",
+  "checkpoint_dir": "ml\\checkpoints\\roberta\\best_checkpoint",
+  "total_test_chunks": 3721,
+  "evaluation_duration_seconds": 790.8,
+  "frozen_calibrated_thresholds": {
+    "liability_cap": 0.56,
+    "termination_for_convenience": 0.28,
+    "anti_assignment": 0.4,
+    "renewal_term": 0.3,
+    "governing_law": 0.48,
+    "audit_rights": 0.5,
+    "ip_ownership_assignment": 0.3,
+    "license_grant": 0.52,
+    "non_compete": 0.36
+  },
+  "test_metrics_calibrated": {
+    "macro_precision": 0.2047,
+    "macro_recall": 0.3051,
+    "macro_f1": 0.2055,
+    "mean_pr_auc": 0.1567,
+    "micro_precision": 0.12,
+    "micro_recall": 0.2955,
+    "micro_f1": 0.1707,
+    "per_category": {
+      "liability_cap": {
+        "threshold": 0.56,
+        "precision": 0.3077,
+        "recall": 0.2857,
+        "f1": 0.2963,
+        "pr_auc": 0.2068,
+        "support_positive": 84,
+        "support_negative": 3637,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 24,
+          "fp": 54,
+          "fn": 60,
+          "tn": 3583
+        }
+      },
+      "termination_for_convenience": {
+        "threshold": 0.28,
+        "precision": 0.0409,
+        "recall": 0.3421,
+        "f1": 0.073,
+        "pr_auc": 0.0352,
+        "support_positive": 38,
+        "support_negative": 3683,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 13,
+          "fp": 305,
+          "fn": 25,
+          "tn": 3378
+        }
+      },
+      "anti_assignment": {
+        "threshold": 0.4,
+        "precision": 0.3205,
+        "recall": 0.2404,
+        "f1": 0.2747,
+        "pr_auc": 0.2655,
+        "support_positive": 104,
+        "support_negative": 3617,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 25,
+          "fp": 53,
+          "fn": 79,
+          "tn": 3564
+        }
+      },
+      "renewal_term": {
+        "threshold": 0.3,
+        "precision": 0.0986,
+        "recall": 0.2414,
+        "f1": 0.14,
+        "pr_auc": 0.0644,
+        "support_positive": 29,
+        "support_negative": 3692,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 7,
+          "fp": 64,
+          "fn": 22,
+          "tn": 3628
+        }
+      },
+      "governing_law": {
+        "threshold": 0.48,
+        "precision": 0.2281,
+        "recall": 0.2857,
+        "f1": 0.2537,
+        "pr_auc": 0.172,
+        "support_positive": 91,
+        "support_negative": 3630,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 26,
+          "fp": 88,
+          "fn": 65,
+          "tn": 3542
+        }
+      },
+      "audit_rights": {
+        "threshold": 0.5,
+        "precision": 0.2632,
+        "recall": 0.2083,
+        "f1": 0.2326,
+        "pr_auc": 0.1789,
+        "support_positive": 72,
+        "support_negative": 3649,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 15,
+          "fp": 42,
+          "fn": 57,
+          "tn": 3607
+        }
+      },
+      "ip_ownership_assignment": {
+        "threshold": 0.3,
+        "precision": 0.0806,
+        "recall": 0.449,
+        "f1": 0.1366,
+        "pr_auc": 0.0777,
+        "support_positive": 49,
+        "support_negative": 3672,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 22,
+          "fp": 251,
+          "fn": 27,
+          "tn": 3421
+        }
+      },
+      "license_grant": {
+        "threshold": 0.52,
+        "precision": 0.4675,
+        "recall": 0.3158,
+        "f1": 0.377,
+        "pr_auc": 0.378,
+        "support_positive": 114,
+        "support_negative": 3607,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 36,
+          "fp": 41,
+          "fn": 78,
+          "tn": 3566
+        }
+      },
+      "non_compete": {
+        "threshold": 0.36,
+        "precision": 0.0357,
+        "recall": 0.3778,
+        "f1": 0.0653,
+        "pr_auc": 0.0316,
+        "support_positive": 45,
+        "support_negative": 3676,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 17,
+          "fp": 459,
+          "fn": 28,
+          "tn": 3217
+        }
+      }
+    },
+    "loss": 0.5272
+  },
+  "test_metrics_default_05": {
+    "macro_precision": 0.1186,
+    "macro_recall": 0.1445,
+    "macro_f1": 0.1251,
+    "mean_pr_auc": 0.1567,
+    "micro_precision": 0.2784,
+    "micro_recall": 0.1997,
+    "micro_f1": 0.2326,
+    "per_category": {
+      "liability_cap": {
+        "threshold": 0.5,
+        "precision": 0.2655,
+        "recall": 0.3571,
+        "f1": 0.3046,
+        "pr_auc": 0.2068,
+        "support_positive": 84,
+        "support_negative": 3637,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 30,
+          "fp": 83,
+          "fn": 54,
+          "tn": 3554
+        }
+      },
+      "termination_for_convenience": {
+        "threshold": 0.5,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "pr_auc": 0.0352,
+        "support_positive": 38,
+        "support_negative": 3683,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 38,
+          "tn": 3683
+        }
+      },
+      "anti_assignment": {
+        "threshold": 0.5,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "pr_auc": 0.2655,
+        "support_positive": 104,
+        "support_negative": 3617,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 104,
+          "tn": 3617
+        }
+      },
+      "renewal_term": {
+        "threshold": 0.5,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "pr_auc": 0.0644,
+        "support_positive": 29,
+        "support_negative": 3692,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 29,
+          "tn": 3692
+        }
+      },
+      "governing_law": {
+        "threshold": 0.5,
+        "precision": 0.2381,
+        "recall": 0.1648,
+        "f1": 0.1948,
+        "pr_auc": 0.172,
+        "support_positive": 91,
+        "support_negative": 3630,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 15,
+          "fp": 48,
+          "fn": 76,
+          "tn": 3582
+        }
+      },
+      "audit_rights": {
+        "threshold": 0.5,
+        "precision": 0.2632,
+        "recall": 0.2083,
+        "f1": 0.2326,
+        "pr_auc": 0.1789,
+        "support_positive": 72,
+        "support_negative": 3649,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 15,
+          "fp": 42,
+          "fn": 57,
+          "tn": 3607
+        }
+      },
+      "ip_ownership_assignment": {
+        "threshold": 0.5,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "pr_auc": 0.0777,
+        "support_positive": 49,
+        "support_negative": 3672,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 49,
+          "tn": 3672
+        }
+      },
+      "license_grant": {
+        "threshold": 0.5,
+        "precision": 0.3009,
+        "recall": 0.5702,
+        "f1": 0.3939,
+        "pr_auc": 0.378,
+        "support_positive": 114,
+        "support_negative": 3607,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 65,
+          "fp": 151,
+          "fn": 49,
+          "tn": 3456
+        }
+      },
+      "non_compete": {
+        "threshold": 0.5,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "pr_auc": 0.0316,
+        "support_positive": 45,
+        "support_negative": 3676,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 45,
+          "tn": 3676
+        }
+      }
+    },
+    "loss": 0.5272
+  }
+}

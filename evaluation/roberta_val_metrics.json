@@ -1,0 +1,345 @@
+{
+  "model_alias": "roberta",
+  "model_name_or_path": "roberta-base",
+  "device": "cpu",
+  "total_train_time_seconds": 1541.0,
+  "model_size_mb": 475.59,
+  "latency_ms": {
+    "p50": 208.24,
+    "p95": 224.4
+  },
+  "training_history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.9617,
+      "val_loss": 0.5269,
+      "val_macro_f1": 0.1311,
+      "val_micro_f1": 0.242,
+      "epoch_time_seconds": 926.6
+    }
+  ],
+  "validation_metrics_default_05": {
+    "macro_precision": 0.1138,
+    "macro_recall": 0.1665,
+    "macro_f1": 0.1311,
+    "mean_pr_auc": 0.1646,
+    "micro_precision": 0.2478,
+    "micro_recall": 0.2364,
+    "micro_f1": 0.242,
+    "per_category": {
+      "liability_cap": {
+        "threshold": 0.5,
+        "precision": 0.3678,
+        "recall": 0.4776,
+        "f1": 0.4156,
+        "pr_auc": 0.3571,
+        "support_positive": 67,
+        "support_negative": 2745,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 32,
+          "fp": 55,
+          "fn": 35,
+          "tn": 2690
+        }
+      },
+      "termination_for_convenience": {
+        "threshold": 0.5,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "pr_auc": 0.0311,
+        "support_positive": 25,
+        "support_negative": 2787,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 25,
+          "tn": 2787
+        }
+      },
+      "anti_assignment": {
+        "threshold": 0.5,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "pr_auc": 0.2272,
+        "support_positive": 68,
+        "support_negative": 2744,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 68,
+          "tn": 2744
+        }
+      },
+      "renewal_term": {
+        "threshold": 0.5,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "pr_auc": 0.1216,
+        "support_positive": 34,
+        "support_negative": 2778,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 34,
+          "tn": 2778
+        }
+      },
+      "governing_law": {
+        "threshold": 0.5,
+        "precision": 0.1905,
+        "recall": 0.2264,
+        "f1": 0.2069,
+        "pr_auc": 0.1723,
+        "support_positive": 53,
+        "support_negative": 2759,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 12,
+          "fp": 51,
+          "fn": 41,
+          "tn": 2708
+        }
+      },
+      "audit_rights": {
+        "threshold": 0.5,
+        "precision": 0.2459,
+        "recall": 0.2381,
+        "f1": 0.2419,
+        "pr_auc": 0.1624,
+        "support_positive": 63,
+        "support_negative": 2749,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 15,
+          "fp": 46,
+          "fn": 48,
+          "tn": 2703
+        }
+      },
+      "ip_ownership_assignment": {
+        "threshold": 0.5,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "pr_auc": 0.0734,
+        "support_positive": 37,
+        "support_negative": 2775,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 37,
+          "tn": 2775
+        }
+      },
+      "license_grant": {
+        "threshold": 0.5,
+        "precision": 0.2204,
+        "recall": 0.5567,
+        "f1": 0.3158,
+        "pr_auc": 0.2898,
+        "support_positive": 97,
+        "support_negative": 2715,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 54,
+          "fp": 191,
+          "fn": 43,
+          "tn": 2524
+        }
+      },
+      "non_compete": {
+        "threshold": 0.5,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "pr_auc": 0.0468,
+        "support_positive": 34,
+        "support_negative": 2778,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 34,
+          "tn": 2778
+        }
+      }
+    },
+    "loss": 0.5269
+  },
+  "validation_metrics_calibrated": {
+    "macro_precision": 0.2219,
+    "macro_recall": 0.3187,
+    "macro_f1": 0.2314,
+    "mean_pr_auc": 0.1646,
+    "micro_precision": 0.1482,
+    "micro_recall": 0.3222,
+    "micro_f1": 0.203,
+    "per_category": {
+      "liability_cap": {
+        "threshold": 0.56,
+        "precision": 0.4821,
+        "recall": 0.403,
+        "f1": 0.439,
+        "pr_auc": 0.3571,
+        "support_positive": 67,
+        "support_negative": 2745,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 27,
+          "fp": 29,
+          "fn": 40,
+          "tn": 2716
+        }
+      },
+      "termination_for_convenience": {
+        "threshold": 0.28,
+        "precision": 0.0375,
+        "recall": 0.24,
+        "f1": 0.0649,
+        "pr_auc": 0.0311,
+        "support_positive": 25,
+        "support_negative": 2787,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 6,
+          "fp": 154,
+          "fn": 19,
+          "tn": 2633
+        }
+      },
+      "anti_assignment": {
+        "threshold": 0.4,
+        "precision": 0.3333,
+        "recall": 0.25,
+        "f1": 0.2857,
+        "pr_auc": 0.2272,
+        "support_positive": 68,
+        "support_negative": 2744,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 17,
+          "fp": 34,
+          "fn": 51,
+          "tn": 2710
+        }
+      },
+      "renewal_term": {
+        "threshold": 0.3,
+        "precision": 0.2093,
+        "recall": 0.2647,
+        "f1": 0.2338,
+        "pr_auc": 0.1216,
+        "support_positive": 34,
+        "support_negative": 2778,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 9,
+          "fp": 34,
+          "fn": 25,
+          "tn": 2744
+        }
+      },
+      "governing_law": {
+        "threshold": 0.48,
+        "precision": 0.2,
+        "recall": 0.3585,
+        "f1": 0.2568,
+        "pr_auc": 0.1723,
+        "support_positive": 53,
+        "support_negative": 2759,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 19,
+          "fp": 76,
+          "fn": 34,
+          "tn": 2683
+        }
+      },
+      "audit_rights": {
+        "threshold": 0.5,
+        "precision": 0.2459,
+        "recall": 0.2381,
+        "f1": 0.2419,
+        "pr_auc": 0.1624,
+        "support_positive": 63,
+        "support_negative": 2749,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 15,
+          "fp": 46,
+          "fn": 48,
+          "tn": 2703
+        }
+      },
+      "ip_ownership_assignment": {
+        "threshold": 0.3,
+        "precision": 0.0657,
+        "recall": 0.3514,
+        "f1": 0.1106,
+        "pr_auc": 0.0734,
+        "support_positive": 37,
+        "support_negative": 2775,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 13,
+          "fp": 185,
+          "fn": 24,
+          "tn": 2590
+        }
+      },
+      "license_grant": {
+        "threshold": 0.52,
+        "precision": 0.3736,
+        "recall": 0.3505,
+        "f1": 0.3617,
+        "pr_auc": 0.2898,
+        "support_positive": 97,
+        "support_negative": 2715,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 34,
+          "fp": 57,
+          "fn": 63,
+          "tn": 2658
+        }
+      },
+      "non_compete": {
+        "threshold": 0.36,
+        "precision": 0.0493,
+        "recall": 0.4118,
+        "f1": 0.0881,
+        "pr_auc": 0.0468,
+        "support_positive": 34,
+        "support_negative": 2778,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 14,
+          "fp": 270,
+          "fn": 20,
+          "tn": 2508
+        }
+      }
+    },
+    "loss": 0.5269
+  },
+  "calibrated_thresholds": {
+    "liability_cap": 0.56,
+    "termination_for_convenience": 0.28,
+    "anti_assignment": 0.4,
+    "renewal_term": 0.3,
+    "governing_law": 0.48,
+    "audit_rights": 0.5,
+    "ip_ownership_assignment": 0.3,
+    "license_grant": 0.52,
+    "non_compete": 0.36
+  },
+  "checkpoint_dir": "ml\\checkpoints\\roberta\\best_checkpoint"
+}

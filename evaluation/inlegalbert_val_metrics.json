@@ -1,0 +1,345 @@
+{
+  "model_alias": "inlegalbert",
+  "model_name_or_path": "law-ai/InLegalBERT",
+  "device": "cpu",
+  "total_train_time_seconds": 1633.3,
+  "model_size_mb": 417.75,
+  "latency_ms": {
+    "p50": 215.58,
+    "p95": 368.24
+  },
+  "training_history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.8876,
+      "val_loss": 0.4807,
+      "val_macro_f1": 0.1588,
+      "val_micro_f1": 0.1958,
+      "epoch_time_seconds": 957.8
+    }
+  ],
+  "validation_metrics_default_05": {
+    "macro_precision": 0.105,
+    "macro_recall": 0.3664,
+    "macro_f1": 0.1588,
+    "mean_pr_auc": 0.1592,
+    "micro_precision": 0.1251,
+    "micro_recall": 0.4498,
+    "micro_f1": 0.1958,
+    "per_category": {
+      "liability_cap": {
+        "threshold": 0.5,
+        "precision": 0.1643,
+        "recall": 0.5224,
+        "f1": 0.25,
+        "pr_auc": 0.2662,
+        "support_positive": 67,
+        "support_negative": 2745,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 35,
+          "fp": 178,
+          "fn": 32,
+          "tn": 2567
+        }
+      },
+      "termination_for_convenience": {
+        "threshold": 0.5,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "pr_auc": 0.0324,
+        "support_positive": 25,
+        "support_negative": 2787,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 25,
+          "tn": 2787
+        }
+      },
+      "anti_assignment": {
+        "threshold": 0.5,
+        "precision": 0.1771,
+        "recall": 0.4559,
+        "f1": 0.2551,
+        "pr_auc": 0.1941,
+        "support_positive": 68,
+        "support_negative": 2744,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 31,
+          "fp": 144,
+          "fn": 37,
+          "tn": 2600
+        }
+      },
+      "renewal_term": {
+        "threshold": 0.5,
+        "precision": 0.1711,
+        "recall": 0.3824,
+        "f1": 0.2364,
+        "pr_auc": 0.1975,
+        "support_positive": 34,
+        "support_negative": 2778,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 13,
+          "fp": 63,
+          "fn": 21,
+          "tn": 2715
+        }
+      },
+      "governing_law": {
+        "threshold": 0.5,
+        "precision": 0.1946,
+        "recall": 0.8113,
+        "f1": 0.3139,
+        "pr_auc": 0.2989,
+        "support_positive": 53,
+        "support_negative": 2759,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 43,
+          "fp": 178,
+          "fn": 10,
+          "tn": 2581
+        }
+      },
+      "audit_rights": {
+        "threshold": 0.5,
+        "precision": 0.0763,
+        "recall": 0.2857,
+        "f1": 0.1204,
+        "pr_auc": 0.0889,
+        "support_positive": 63,
+        "support_negative": 2749,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 18,
+          "fp": 218,
+          "fn": 45,
+          "tn": 2531
+        }
+      },
+      "ip_ownership_assignment": {
+        "threshold": 0.5,
+        "precision": 0.0625,
+        "recall": 0.1081,
+        "f1": 0.0792,
+        "pr_auc": 0.0393,
+        "support_positive": 37,
+        "support_negative": 2775,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 4,
+          "fp": 60,
+          "fn": 33,
+          "tn": 2715
+        }
+      },
+      "license_grant": {
+        "threshold": 0.5,
+        "precision": 0.0992,
+        "recall": 0.732,
+        "f1": 0.1747,
+        "pr_auc": 0.2972,
+        "support_positive": 97,
+        "support_negative": 2715,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 71,
+          "fp": 645,
+          "fn": 26,
+          "tn": 2070
+        }
+      },
+      "non_compete": {
+        "threshold": 0.5,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "pr_auc": 0.0179,
+        "support_positive": 34,
+        "support_negative": 2778,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 0,
+          "fp": 17,
+          "fn": 34,
+          "tn": 2761
+        }
+      }
+    },
+    "loss": 0.4807
+  },
+  "validation_metrics_calibrated": {
+    "macro_precision": 0.17,
+    "macro_recall": 0.2944,
+    "macro_f1": 0.2032,
+    "mean_pr_auc": 0.1592,
+    "micro_precision": 0.1467,
+    "micro_recall": 0.3222,
+    "micro_f1": 0.2016,
+    "per_category": {
+      "liability_cap": {
+        "threshold": 0.62,
+        "precision": 0.3462,
+        "recall": 0.2687,
+        "f1": 0.3025,
+        "pr_auc": 0.2662,
+        "support_positive": 67,
+        "support_negative": 2745,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 18,
+          "fp": 34,
+          "fn": 49,
+          "tn": 2711
+        }
+      },
+      "termination_for_convenience": {
+        "threshold": 0.36,
+        "precision": 0.0476,
+        "recall": 0.12,
+        "f1": 0.0682,
+        "pr_auc": 0.0324,
+        "support_positive": 25,
+        "support_negative": 2787,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 3,
+          "fp": 60,
+          "fn": 22,
+          "tn": 2727
+        }
+      },
+      "anti_assignment": {
+        "threshold": 0.56,
+        "precision": 0.2625,
+        "recall": 0.3088,
+        "f1": 0.2838,
+        "pr_auc": 0.1941,
+        "support_positive": 68,
+        "support_negative": 2744,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 21,
+          "fp": 59,
+          "fn": 47,
+          "tn": 2685
+        }
+      },
+      "renewal_term": {
+        "threshold": 0.5,
+        "precision": 0.1711,
+        "recall": 0.3824,
+        "f1": 0.2364,
+        "pr_auc": 0.1975,
+        "support_positive": 34,
+        "support_negative": 2778,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 13,
+          "fp": 63,
+          "fn": 21,
+          "tn": 2715
+        }
+      },
+      "governing_law": {
+        "threshold": 0.6,
+        "precision": 0.2441,
+        "recall": 0.5849,
+        "f1": 0.3444,
+        "pr_auc": 0.2989,
+        "support_positive": 53,
+        "support_negative": 2759,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 31,
+          "fp": 96,
+          "fn": 22,
+          "tn": 2663
+        }
+      },
+      "audit_rights": {
+        "threshold": 0.56,
+        "precision": 0.1139,
+        "recall": 0.1429,
+        "f1": 0.1268,
+        "pr_auc": 0.0889,
+        "support_positive": 63,
+        "support_negative": 2749,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 9,
+          "fp": 70,
+          "fn": 54,
+          "tn": 2679
+        }
+      },
+      "ip_ownership_assignment": {
+        "threshold": 0.48,
+        "precision": 0.0625,
+        "recall": 0.1622,
+        "f1": 0.0902,
+        "pr_auc": 0.0393,
+        "support_positive": 37,
+        "support_negative": 2775,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 6,
+          "fp": 90,
+          "fn": 31,
+          "tn": 2685
+        }
+      },
+      "license_grant": {
+        "threshold": 0.6,
+        "precision": 0.2584,
+        "recall": 0.4742,
+        "f1": 0.3345,
+        "pr_auc": 0.2972,
+        "support_positive": 97,
+        "support_negative": 2715,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 46,
+          "fp": 132,
+          "fn": 51,
+          "tn": 2583
+        }
+      },
+      "non_compete": {
+        "threshold": 0.36,
+        "precision": 0.0234,
+        "recall": 0.2059,
+        "f1": 0.042,
+        "pr_auc": 0.0179,
+        "support_positive": 34,
+        "support_negative": 2778,
+        "masked_unknown": 0,
+        "confusion_matrix": {
+          "tp": 7,
+          "fp": 292,
+          "fn": 27,
+          "tn": 2486
+        }
+      }
+    },
+    "loss": 0.4807
+  },
+  "calibrated_thresholds": {
+    "liability_cap": 0.62,
+    "termination_for_convenience": 0.36,
+    "anti_assignment": 0.56,
+    "renewal_term": 0.5,
+    "governing_law": 0.6,
+    "audit_rights": 0.56,
+    "ip_ownership_assignment": 0.48,
+    "license_grant": 0.6,
+    "non_compete": 0.36
+  },
+  "checkpoint_dir": "ml\\checkpoints\\inlegalbert\\best_checkpoint"
+}

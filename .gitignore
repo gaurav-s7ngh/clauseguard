@@ -28,6 +28,7 @@ ml/checkpoints/
 *.pt
 *.pth
 *.bin
+*.safetensors
 
 # Jupyter
 .ipynb_checkpoints/

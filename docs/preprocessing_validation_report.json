@@ -1,0 +1,195 @@
+{
+  "pipeline_name": "ClauseGuard Stage 2 Preprocessing Pipeline",
+  "random_seed": 42,
+  "label_names": [
+    "liability_cap",
+    "termination_for_convenience",
+    "anti_assignment",
+    "renewal_term",
+    "governing_law",
+    "audit_rights",
+    "ip_ownership_assignment",
+    "license_grant",
+    "non_compete"
+  ],
+  "split_summary": {
+    "train": {
+      "contracts": 340,
+      "total_chunks": 13965,
+      "positive_chunks": 2132,
+      "negative_chunks": 11833,
+      "positive_ratio": 0.1527,
+      "file_size_bytes": 8976849
+    },
+    "val": {
+      "contracts": 68,
+      "total_chunks": 2812,
+      "positive_chunks": 436,
+      "negative_chunks": 2376,
+      "positive_ratio": 0.155,
+      "file_size_bytes": 1831314
+    },
+    "test": {
+      "contracts": 102,
+      "total_chunks": 3721,
+      "positive_chunks": 575,
+      "negative_chunks": 3146,
+      "positive_ratio": 0.1545,
+      "file_size_bytes": 2405829
+    }
+  },
+  "offset_validation": {
+    "total_annotations_checked": 4243,
+    "exact_offset_matches": 4243,
+    "mismatch_count": 0,
+    "accuracy_pct": 100.0,
+    "exceptions_logged": 0
+  },
+  "cross_chunk_spans": {
+    "total_logged": 113,
+    "description": "Spans spanning across paragraph/chunk boundaries; preserved in all overlapping chunks with local coordinates."
+  },
+  "per_category_distributions": {
+    "train": {
+      "liability_cap": {
+        "positive": 366,
+        "verified_negative": 13597,
+        "unknown": 2
+      },
+      "termination_for_convenience": {
+        "positive": 156,
+        "verified_negative": 13809,
+        "unknown": 0
+      },
+      "anti_assignment": {
+        "positive": 343,
+        "verified_negative": 13621,
+        "unknown": 1
+      },
+      "renewal_term": {
+        "positive": 135,
+        "verified_negative": 13830,
+        "unknown": 0
+      },
+      "governing_law": {
+        "positive": 324,
+        "verified_negative": 13641,
+        "unknown": 0
+      },
+      "audit_rights": {
+        "positive": 290,
+        "verified_negative": 13675,
+        "unknown": 0
+      },
+      "ip_ownership_assignment": {
+        "positive": 154,
+        "verified_negative": 13811,
+        "unknown": 0
+      },
+      "license_grant": {
+        "positive": 413,
+        "verified_negative": 13552,
+        "unknown": 0
+      },
+      "non_compete": {
+        "positive": 133,
+        "verified_negative": 13830,
+        "unknown": 2
+      }
+    },
+    "val": {
+      "liability_cap": {
+        "positive": 67,
+        "verified_negative": 2745,
+        "unknown": 0
+      },
+      "termination_for_convenience": {
+        "positive": 25,
+        "verified_negative": 2787,
+        "unknown": 0
+      },
+      "anti_assignment": {
+        "positive": 68,
+        "verified_negative": 2744,
+        "unknown": 0
+      },
+      "renewal_term": {
+        "positive": 34,
+        "verified_negative": 2778,
+        "unknown": 0
+      },
+      "governing_law": {
+        "positive": 53,
+        "verified_negative": 2759,
+        "unknown": 0
+      },
+      "audit_rights": {
+        "positive": 63,
+        "verified_negative": 2749,
+        "unknown": 0
+      },
+      "ip_ownership_assignment": {
+        "positive": 37,
+        "verified_negative": 2775,
+        "unknown": 0
+      },
+      "license_grant": {
+        "positive": 97,
+        "verified_negative": 2715,
+        "unknown": 0
+      },
+      "non_compete": {
+        "positive": 34,
+        "verified_negative": 2778,
+        "unknown": 0
+      }
+    },
+    "test": {
+      "liability_cap": {
+        "positive": 84,
+        "verified_negative": 3637,
+        "unknown": 0
+      },
+      "termination_for_convenience": {
+        "positive": 38,
+        "verified_negative": 3683,
+        "unknown": 0
+      },
+      "anti_assignment": {
+        "positive": 104,
+        "verified_negative": 3617,
+        "unknown": 0
+      },
+      "renewal_term": {
+        "positive": 29,
+        "verified_negative": 3692,
+        "unknown": 0
+      },
+      "governing_law": {
+        "positive": 91,
+        "verified_negative": 3630,
+        "unknown": 0
+      },
+      "audit_rights": {
+        "positive": 72,
+        "verified_negative": 3649,
+        "unknown": 0
+      },
+      "ip_ownership_assignment": {
+        "positive": 49,
+        "verified_negative": 3672,
+        "unknown": 0
+      },
+      "license_grant": {
+        "positive": 114,
+        "verified_negative": 3607,
+        "unknown": 0
+      },
+      "non_compete": {
+        "positive": 45,
+        "verified_negative": 3676,
+        "unknown": 0
+      }
+    }
+  }
+}

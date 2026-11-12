@@ -1,0 +1,153 @@
+{
+  "selected_model": "roberta",
+  "selection_rationale": "Model roberta was selected based strictly on validation performance (Validation Macro F1: 0.2314).",
+  "validation_comparison": {
+    "roberta": {
+      "macro_f1_default": 0.1311,
+      "macro_f1_calibrated": 0.2314,
+      "micro_f1_calibrated": 0.203,
+      "mean_pr_auc": 0.1646,
+      "val_loss": 0.5269,
+      "latency_p50_ms": 208.24,
+      "latency_p95_ms": 224.4,
+      "model_size_mb": 475.59,
+      "per_category_f1": {
+        "liability_cap": 0.439,
+        "termination_for_convenience": 0.0649,
+        "anti_assignment": 0.2857,
+        "renewal_term": 0.2338,
+        "governing_law": 0.2568,
+        "audit_rights": 0.2419,
+        "ip_ownership_assignment": 0.1106,
+        "license_grant": 0.3617,
+        "non_compete": 0.0881
+      },
+      "thresholds": {
+        "liability_cap": 0.56,
+        "termination_for_convenience": 0.28,
+        "anti_assignment": 0.4,
+        "renewal_term": 0.3,
+        "governing_law": 0.48,
+        "audit_rights": 0.5,
+        "ip_ownership_assignment": 0.3,
+        "license_grant": 0.52,
+        "non_compete": 0.36
+      }
+    },
+    "inlegalbert": {
+      "macro_f1_default": 0.1588,
+      "macro_f1_calibrated": 0.2032,
+      "micro_f1_calibrated": 0.2016,
+      "mean_pr_auc": 0.1592,
+      "val_loss": 0.4807,
+      "latency_p50_ms": 215.58,
+      "latency_p95_ms": 368.24,
+      "model_size_mb": 417.75,
+      "per_category_f1": {
+        "liability_cap": 0.3025,
+        "termination_for_convenience": 0.0682,
+        "anti_assignment": 0.2838,
+        "renewal_term": 0.2364,
+        "governing_law": 0.3444,
+        "audit_rights": 0.1268,
+        "ip_ownership_assignment": 0.0902,
+        "license_grant": 0.3345,
+        "non_compete": 0.042
+      },
+      "thresholds": {
+        "liability_cap": 0.62,
+        "termination_for_convenience": 0.36,
+        "anti_assignment": 0.56,
+        "renewal_term": 0.5,
+        "governing_law": 0.6,
+        "audit_rights": 0.56,
+        "ip_ownership_assignment": 0.48,
+        "license_grant": 0.6,
+        "non_compete": 0.36
+      }
+    }
+  },
+  "official_test_results": {
+    "model": "roberta",
+    "macro_f1_calibrated": 0.2055,
+    "micro_f1_calibrated": 0.1707,
+    "macro_precision": 0.2047,
+    "macro_recall": 0.3051,
+    "mean_pr_auc": 0.1567,
+    "test_loss": 0.5272,
+    "per_category": {
+      "liability_cap": {
+        "precision": 0.3077,
+        "recall": 0.2857,
+        "f1": 0.2963,
+        "pr_auc": 0.2068,
+        "support_positive": 84,
+        "threshold": 0.56
+      },
+      "termination_for_convenience": {
+        "precision": 0.0409,
+        "recall": 0.3421,
+        "f1": 0.073,
+        "pr_auc": 0.0352,
+        "support_positive": 38,
+        "threshold": 0.28
+      },
+      "anti_assignment": {
+        "precision": 0.3205,
+        "recall": 0.2404,
+        "f1": 0.2747,
+        "pr_auc": 0.2655,
+        "support_positive": 104,
+        "threshold": 0.4
+      },
+      "renewal_term": {
+        "precision": 0.0986,
+        "recall": 0.2414,
+        "f1": 0.14,
+        "pr_auc": 0.0644,
+        "support_positive": 29,
+        "threshold": 0.3
+      },
+      "governing_law": {
+        "precision": 0.2281,
+        "recall": 0.2857,
+        "f1": 0.2537,
+        "pr_auc": 0.172,
+        "support_positive": 91,
+        "threshold": 0.48
+      },
+      "audit_rights": {
+        "precision": 0.2632,
+        "recall": 0.2083,
+        "f1": 0.2326,
+        "pr_auc": 0.1789,
+        "support_positive": 72,
+        "threshold": 0.5
+      },
+      "ip_ownership_assignment": {
+        "precision": 0.0806,
+        "recall": 0.449,
+        "f1": 0.1366,
+        "pr_auc": 0.0777,
+        "support_positive": 49,
+        "threshold": 0.3
+      },
+      "license_grant": {
+        "precision": 0.4675,
+        "recall": 0.3158,
+        "f1": 0.377,
+        "pr_auc": 0.378,
+        "support_positive": 114,
+        "threshold": 0.52
+      },
+      "non_compete": {
+        "precision": 0.0357,
+        "recall": 0.3778,
+        "f1": 0.0653,
+        "pr_auc": 0.0316,
+        "support_positive": 45,
+        "threshold": 0.36
+      }
+    }
+  }
+}
