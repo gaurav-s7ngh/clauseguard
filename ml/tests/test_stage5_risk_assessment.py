@@ -16,6 +16,7 @@ Validates:
 import json
 import pytest
 
+from pathlib import Path
 from ml.preprocessing.constants import LABEL_NAMES
 from ml.risk_assessment.models import (
     RiskLevel,
@@ -573,6 +574,10 @@ def test_json_serialization_and_stage6_schema_compliance():
 # ============================================================================
 # Test 15: End-to-End Pipeline Execution
 # ============================================================================
+@pytest.mark.skipif(
+    not Path("ml/checkpoints/roberta/best_checkpoint/clauseguard_config.json").exists(),
+    reason="Requires local ML model checkpoints"
+)
 def test_e2e_integration_with_stage4_pipeline_output():
     """Verify that actual ClauseGuardPipeline output directly feeds into Stage 5 engine."""
     pipeline = ClauseGuardPipeline(

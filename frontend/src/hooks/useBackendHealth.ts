@@ -11,14 +11,13 @@ export function useBackendHealth() {
   });
 
   const isMock =
-    import.meta.env.VITE_USE_MOCK_API === undefined ||
     import.meta.env.VITE_USE_MOCK_API === 'true' ||
     import.meta.env.VITE_USE_MOCK_API === true;
 
   return {
     ...query,
     isMock,
-    isHealthy: query.data?.status === 'healthy',
+    isHealthy: query.data?.status === 'healthy' || query.data?.status === 'ok',
     isOffline: query.isError || query.data?.status === 'offline'
   };
 }

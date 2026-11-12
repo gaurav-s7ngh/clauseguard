@@ -8,8 +8,8 @@ import { MockClauseGuardApiClient } from './mock';
  */
 function createApiClient(): ClauseGuardApiClient {
   const useMockEnv = import.meta.env.VITE_USE_MOCK_API;
-  // Default to mock unless explicitly disabled:
-  const useMock = useMockEnv === undefined || useMockEnv === 'true' || useMockEnv === true;
+  // Default to real backend unless explicitly set to 'true':
+  const useMock = useMockEnv === 'true' || useMockEnv === true;
 
   if (useMock) {
     return new MockClauseGuardApiClient();
