@@ -30,8 +30,9 @@ ml/checkpoints/
 *.bin
 *.safetensors
 
-# Jupyter
-.ipynb_checkpoints/
+# Temporary and scratch files
+scratch/
+*.scratch.*
 
 # IDE
 .vscode/
