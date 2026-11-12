@@ -9,7 +9,7 @@ Unified contract analysis engine combining:
 Produces structured clause results adhering to the Stage 5 contract.
 """
 
-from typing import List, Dict, Any, Optional, Union
+from typing import List, Dict, Any, Optional, Union, Tuple
 from pathlib import Path
 import json
 import torch
@@ -35,7 +35,7 @@ class ClauseGuardPipeline:
         classifier_path: Union[str, Path] = DEFAULT_CLASSIFIER_PATH,
         extractor_path: Union[str, Path] = DEFAULT_EXTRACTOR_PATH,
         strategy: str = "assisted",  # 'assisted' or 'independent'
-        assist_threshold: float = 0.20,
+        assist_threshold: Optional[float] = None,
         min_span_confidence: float = 0.20,
         device: Optional[str] = None
     ):
@@ -68,8 +68,9 @@ class ClauseGuardPipeline:
         chunk_text: str,
         chunk_id: str = "chunk_0",
         chunk_char_start: int = 0,
-        document_id: Optional[str] = None
-    ) -> List[Dict[str, Any]]:
+        document_id: Optional[str] = None,
+        return_classification: bool = False
+    ) -> Union[List[Dict[str, Any]], Tuple[List[Dict[str, Any]], Dict[str, Any]]]:
         """
         Analyzes a single chunk of text and extracts localized clause spans.
         """
@@ -80,12 +81,20 @@ class ClauseGuardPipeline:
         # Step 2: Determine which channels to extract based on strategy
         channel_whitelist = None
         if self.strategy == "assisted":
-            channel_whitelist = [
-                LABEL_TO_IDX[cat] for cat in LABEL_NAMES
-                if cat_probs[cat] >= self.assist_threshold or clf_result["categories"][cat]["detected"]
-            ]
+            if self.assist_threshold is not None:
+                channel_whitelist = [
+                    LABEL_TO_IDX[cat] for cat in LABEL_NAMES
+                    if clf_result["categories"][cat]["detected"] or cat_probs[cat] >= self.assist_threshold
+                ]
+            else:
+                channel_whitelist = [
+                    LABEL_TO_IDX[cat] for cat in LABEL_NAMES
+                    if clf_result["categories"][cat]["detected"]
+                ]
             # If no category meets assistance threshold, skip extraction
             if not channel_whitelist:
+                if return_classification:
+                    return [], clf_result
                 return []
 
         # Step 3: Run Stage 4 Span Extractor
@@ -121,6 +130,8 @@ class ClauseGuardPipeline:
             channel_whitelist=channel_whitelist
         )
 
+        if return_classification:
+            return extracted, clf_result
         return extracted
 
     def analyze_document(
@@ -144,21 +155,28 @@ class ClauseGuardPipeline:
         )
 
         all_extracted_spans = []
+        document_detected_categories = set()
 
         for ch in chunks:
-            ch_spans = self.analyze_chunk(
+            ch_spans, ch_clf = self.analyze_chunk(
                 chunk_text=ch.text,
                 chunk_id=ch.chunk_id,
                 chunk_char_start=ch.char_start,
-                document_id=document_id
+                document_id=document_id,
+                return_classification=True
             )
             all_extracted_spans.extend(ch_spans)
+            for cat, data in ch_clf.get("categories", {}).items():
+                if data.get("detected"):
+                    document_detected_categories.add(cat)
 
         # Merge cross-chunk and overlapping spans across the complete contract
         merged_clauses = merge_overlapping_clauses(
             clauses=all_extracted_spans,
             full_document_text=document_text
         )
+
+        extracted_categories = sorted(list(set(cl["category"] for cl in merged_clauses)))
 
         return {
             "document_id": document_id,
@@ -169,5 +187,7 @@ class ClauseGuardPipeline:
             "strategy": self.strategy,
             "assist_threshold": self.assist_threshold if self.strategy == "assisted" else None,
             "pipeline_version": "clauseguard-stage4-v1",
+            "detected_categories": sorted(list(document_detected_categories)),
+            "extracted_categories": extracted_categories,
             "clauses": merged_clauses
         }

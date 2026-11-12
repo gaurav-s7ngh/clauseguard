@@ -29,6 +29,7 @@ from ml.extraction.token_tagging import (
     TAG_O, TAG_B, TAG_I, IGNORE_INDEX
 )
 from ml.extraction.model import ClauseGuardSpanExtractor
+from ml.extraction.evaluate import evaluate_predicted_spans
 from ml.inference.pipeline import ClauseGuardPipeline
 
 # ============================================================================
@@ -101,6 +102,21 @@ def test_exact_span_reconstruction():
     assert decoded[0]["clause_text"] == gold_clause
     assert decoded[0]["start_char"] == 500 + s_start
     assert decoded[0]["end_char"] == 500 + s_end
+
+    # Verify evaluation respects document isolation
+    eval_match = evaluate_predicted_spans(
+        predicted_spans=decoded,
+        gold_spans=[{"category": "governing_law", "global_start": 500 + s_start, "global_end": 500 + s_end, "document_id": "doc_test_01"}]
+    )
+    assert eval_match["per_category"]["governing_law"]["exact_match"]["tp"] == 1
+
+    eval_mismatch = evaluate_predicted_spans(
+        predicted_spans=decoded,
+        gold_spans=[{"category": "governing_law", "global_start": 500 + s_start, "global_end": 500 + s_end, "document_id": "other_doc"}]
+    )
+    assert eval_mismatch["per_category"]["governing_law"]["exact_match"]["tp"] == 0
+    assert eval_mismatch["per_category"]["governing_law"]["exact_match"]["fp"] == 1
+    assert eval_mismatch["per_category"]["governing_law"]["exact_match"]["fn"] == 1
 
 
 # ============================================================================
@@ -287,17 +303,18 @@ def test_masked_supervision_exclusion():
 
 
 # ============================================================================
-# Test 8: Duplicate prediction handling
+# Test 8: Duplicate prediction handling & document isolation
 # ============================================================================
 def test_duplicate_prediction_deduplication():
-    """Verify identical duplicate spans from consecutive chunks are deduplicated."""
+    """Verify duplicate spans from consecutive chunks are deduplicated within same document, but isolated across documents."""
     c1 = {
         "category": "anti_assignment",
         "clause_text": "Neither party may assign this Agreement without prior written consent.",
         "start_char": 400,
         "end_char": 470,
         "confidence": 0.82,
-        "chunk_id": "chunk_A"
+        "chunk_id": "chunk_A",
+        "document_id": "doc_1"
     }
     c2 = {
         "category": "anti_assignment",
@@ -305,13 +322,31 @@ def test_duplicate_prediction_deduplication():
         "start_char": 400,
         "end_char": 470,
         "confidence": 0.94,
-        "chunk_id": "chunk_B"
+        "chunk_id": "chunk_B",
+        "document_id": "doc_1"
+    }
+    c3_other_doc = {
+        "category": "anti_assignment",
+        "clause_text": "Neither party may assign this Agreement without prior written consent.",
+        "start_char": 400,
+        "end_char": 470,
+        "confidence": 0.90,
+        "chunk_id": "chunk_C",
+        "document_id": "doc_2"
     }
 
-    merged = merge_overlapping_clauses([c1, c2])
-    assert len(merged) == 1
-    assert merged[0]["confidence"] == 0.94
-    assert merged[0]["start_char"] == 400
+    # Within same document: deduplicated to highest confidence
+    merged_same = merge_overlapping_clauses([c1, c2])
+    assert len(merged_same) == 1
+    assert merged_same[0]["confidence"] == 0.94
+    assert merged_same[0]["start_char"] == 400
+    assert merged_same[0].get("document_id") == "doc_1"
+
+    # Across different documents: must NOT merge together despite identical offsets
+    merged_cross = merge_overlapping_clauses([c1, c2, c3_other_doc])
+    assert len(merged_cross) == 2, "Spans from different documents must remain isolated"
+    doc_ids = {m.get("document_id") for m in merged_cross}
+    assert doc_ids == {"doc_1", "doc_2"}
 
 
 # ============================================================================
@@ -356,6 +391,8 @@ def test_integrated_pipeline_execution():
     result = pipeline.analyze_document(sample_contract, document_id="test_contract_01")
     assert "document_id" in result
     assert "clauses" in result
+    assert "detected_categories" in result
+    assert "extracted_categories" in result
     assert result["document_id"] == "test_contract_01"
     assert result["total_chunks"] >= 1
 
